@@ -2,4 +2,5 @@
 Trying out streamlit for the very first time
 
 streamlit run Streamlit_test.py
-![Screenshot](preview.png)
+
+![Preview](preview.png)
