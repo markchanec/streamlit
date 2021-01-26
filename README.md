@@ -3,4 +3,4 @@ Trying out streamlit for the very first time
 
 streamlit run Streamlit_test.py
 
-![Preview](preview.png)
+![Preview](https://github.com/markchanec/streamlit_test/blob/main/preview.PNG)
