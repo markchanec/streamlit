@@ -1,6 +1,6 @@
 # streamlit_test
-Trying out streamlit for the very first time
+Example of an end-to-end fullstack using MySQL,Python and Streamlit.
 
 streamlit run Streamlit_test.py
 
-![Preview](https://github.com/markchanec/streamlit_test/blob/main/preview1.PNG)
+![Preview](https://github.com/markchanec/streamlit_test/blob/main/preview.PNG)
