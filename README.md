@@ -1,4 +1,4 @@
-# streamlit_test
+# streamlit
 Example of an end-to-end fullstack using MySQL,Python and Streamlit.
 
 streamlit run webapp.py
