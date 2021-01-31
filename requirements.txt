@@ -1,3 +1,0 @@
-streamlit==0.75.0
-plotly==4.9.0
-numpy==1.19.1
