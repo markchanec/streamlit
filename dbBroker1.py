@@ -35,7 +35,7 @@ def init_webapp(id):
 #     Kde_df = df1.query("token_ids==@id")
 #     Kde_list = Kde_df.values.tolist()
 #     Kde_list[0].pop(0)
-    mu = Iqr_list[0][0]
+    mu = np.log(Iqr_list[0][0])
     Iqr_list[0].pop(0) #drop mu
     
     q5 = Iqr_list[0][0]
@@ -45,7 +45,7 @@ def init_webapp(id):
     x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
     Kde_list = norm.pdf(x, mu, sigma)
     
-    return Iqr_list[0], Kde_list
+    return Iqr_list[0], np.exp(Kde_list)
 
 
 # In[3]:
