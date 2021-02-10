@@ -61,7 +61,7 @@ def getRecord(id):
 def getRandomID():
     rand = df0.sample()
 
-    return [rand['token_ids'].values[0]]
+    return [ int(rand['token_ids'].values[0]) ]
 
 
 # In[5]:
