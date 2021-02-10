@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[81]:
+# In[1]:
 
 
 #online sharing version for share.streamlit.io
@@ -20,7 +20,7 @@ print("CSV0 size =", df0.shape)
 # print("CSV1 size =", df1.shape)
 
 
-# In[82]:
+# In[2]:
 
 
 def init_webapp(id):
@@ -29,30 +29,33 @@ def init_webapp(id):
     Iqr_list = Iqr_df.values.tolist()
     Iqr_list[0].pop(0) #drop id
     
+    # to infer values in CSV1 from CSV0, assume perfect normal distribution
+    # The 5% and 95% quantiles are μ−1.645σ and μ+1.645σ
+    
 #     Kde_df = df1.query("token_ids==@id")
 #     Kde_list = Kde_df.values.tolist()
 #     Kde_list[0].pop(0)
-
-    # to infer values in CSV1 from CSV0, assume perfect normal distribution
-    # The 5% and 95% quantiles are μ−1.645σ and μ+1.645σ
+    mu = Iqr_list[0][0]
+    Iqr_list[0].pop(0) #drop mu
+    
     q5 = Iqr_list[0][0]
     q95 = Iqr_list[0][1]
-    mu = np.log(q95) - np.log(q5)
+    
     sigma = (np.log(q95) - np.log(q5) ) / (1.645*2)
     x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
     Kde_list = norm.pdf(x, mu, sigma)
     
-    return Iqr_list[0], np.exp(Kde_list)
+    return Iqr_list[0], Kde_list
 
 
-# In[83]:
+# In[3]:
 
 
 def getRecord(id):
     init_webapp(id)
 
 
-# In[84]:
+# In[4]:
 
 
 def getRandomID():
@@ -61,7 +64,7 @@ def getRandomID():
     return [rand['token_ids'].values[0]]
 
 
-# In[85]:
+# In[5]:
 
 
 if __name__ == "__main__":
