@@ -42,7 +42,7 @@ def init_webapp(id):
     q95 = Iqr_list[0][1]
     
     sigma = (np.log(q95) - np.log(q5) ) / (1.645*2)
-    x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+    x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
     Kde_list = norm.pdf(x, mu, sigma)
     
     return Iqr_list[0], np.exp(Kde_list)
