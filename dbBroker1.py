@@ -38,14 +38,22 @@ def init_webapp(id):
     mu = np.log(Iqr_list[0][0])
     Iqr_list[0].pop(0) #drop mu
     
-    q5 = Iqr_list[0][0]
-    q95 = Iqr_list[0][1]
+    q5 = np.log(Iqr_list[0][0])
+    q95 = np.log(Iqr_list[0][1])
     
-    sigma = (np.log(q95) - np.log(q5) ) / (1.645*2)
+    sigma = (q95 - q5)  / (1.645*2)
     x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
-    Kde_list = norm.pdf(x, mu, sigma)
+
+#     Kde_list = norm.pdf(x, mu, sigma)
+#     print("mu=", mu)
+#     print("q5=", q5)
+#     print("q95=", q95)
+#     print("sigma=", sigma)
+#     print("LR=", mu - 3*sigma)
+#     print("UR=", mu + 3*sigma)
+#     print("x=", x)
     
-    return Iqr_list[0], np.exp(Kde_list)
+    return Iqr_list[0], np.exp(x)
 
 
 # In[3]:
