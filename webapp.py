@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[12]:
+# In[34]:
 
 
 import streamlit as st
@@ -17,7 +17,7 @@ import scipy
 INIT_ID = 82267
 
 
-# In[13]:
+# In[35]:
 
 
 #run next line if re-creating fresh schema in MySQL so that streamlit can use the latest data
@@ -29,7 +29,7 @@ INIT_ID = 82267
 # print(test)
 
 
-# In[14]:
+# In[36]:
 
 
 st.sidebar.title("Axie Infinity Valuation")
@@ -39,7 +39,7 @@ slot = st.sidebar.empty()
 buttonID = st.sidebar.button("Random Token ID", key="RID")
 
 
-# In[15]:
+# In[37]:
 
 
 if buttonID:
@@ -49,7 +49,7 @@ else:
     tokenID = slot.number_input("Enter a number", value = INIT_ID, key="ID")
 
 
-# In[16]:
+# In[38]:
 
 
 # import SessionState
@@ -60,7 +60,7 @@ else:
 #     st.text(ss.x)
 
 
-# In[17]:
+# In[46]:
 
 
 print("ID =", tokenID)
@@ -69,7 +69,7 @@ print("Record IQR =", Iqr)
 print("Record KDE =", Kde)
 
 
-# In[18]:
+# In[40]:
 
 
 token_address = '<a href="https://opensea.io/assets/0xF5b0A3eFB8e8E4c201e2A935F110eAaF3FFEcb8d/' + str(tokenID) + '" target="_blank">[Token Description]</a>' 
@@ -81,7 +81,7 @@ st.sidebar.write(
 )
 
 
-# In[19]:
+# In[41]:
 
 
 def getUSD():
@@ -91,26 +91,42 @@ def getUSD():
     return usd["ethereum"]["usd"]
 
 
-# In[20]:
+# In[42]:
 
 
 def drawKDE(data, LB, UB):
-    fig = ff.create_distplot([data], ['KDE curve'], colors=["darkred"], show_hist=False, show_rug=False)
-    fig.add_shape(type="line",
-        yref= 'paper', y0= 0, y1= 1,
-        xref= 'x', x0= LB, x1= LB,
-        opacity=0.7, line=dict(color="green",width=3)
-    )
-    fig.add_shape(type="line",
-        yref= 'paper', y0= 0, y1= 1,
-        xref= 'x', x0= UB, x1= UB,
-        opacity=0.7, line=dict(color="green",width=3)
-    )
-    
+#     fig = ff.create_distplot([data], ['KDE curve'], colors=["darkred"], show_hist=False, show_rug=False)
+#     fig.add_shape(type="line",
+#         yref= 'paper', y0= 0, y1= 1,
+#         xref= 'x', x0= LB, x1= LB,
+#         opacity=0.7, line=dict(color="green",width=3)
+#     )
+#     fig.add_shape(type="line",
+#         yref= 'paper', y0= 0, y1= 1,
+#         xref= 'x', x0= UB, x1= UB,
+#         opacity=0.7, line=dict(color="green",width=3)
+#     )
+    import plotly.graph_objs as go
+    from plotly.subplots import make_subplots
+
+    trace1 = go.Indicator(mode="gauge+number", value=LB, domain={'row' : 1, 'column' : 1}, title={'text': "5% quantile"})
+    trace2 = go.Indicator(mode="gauge+number", value=Kde, domain={'row' : 1, 'column' : 1}, title={'text': "median"})
+    trace3 = go.Indicator(mode="gauge+number", value=UB, domain={'row' : 1, 'column' : 2}, title={'text': "95% quantile"})
+
+    fig = make_subplots(
+        rows=1,
+        cols=3,
+        specs=[[{'type' : 'indicator'}, {'type' : 'indicator'}, {'type' : 'indicator'}]],
+        )
+
+    fig.append_trace(trace1, row=1, col=1)
+    fig.append_trace(trace2, row=1, col=2)
+    fig.append_trace(trace3, row=1, col=3)
+
     st.plotly_chart(fig, use_container_width=True)
 
 
-# In[21]:
+# In[43]:
 
 
 data = np.asarray(Kde)
@@ -130,7 +146,7 @@ else:
     drawKDE(data, lowerBound, upperBound)
 
 
-# In[22]:
+# In[44]:
 
 
 st.write(
@@ -139,7 +155,7 @@ st.write(
         The range is a 90% confidence interval.
         The token ID can be found as the string after the last '/' on the asset's page on OpenSea or the Axie Marketplace.
         Valuations are generated from multiple machine learning models trained on historical transaction data, incorporating token metadata, cryptocurrency exchange rates, and overall market trends.
-        This app is for informational purposes only and does not constitute financial advice. Last Uptade: Nov. 18, 2020 
+        This app is for informational purposes only and does not constitute financial advice. Last Update: Nov. 18, 2020 
         """
 )
 
