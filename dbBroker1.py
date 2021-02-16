@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[11]:
 
 
 #online sharing version for share.streamlit.io
@@ -20,7 +20,7 @@ print("CSV0 size =", df0.shape)
 # print("CSV1 size =", df1.shape)
 
 
-# In[2]:
+# In[12]:
 
 
 def init_webapp(id):
@@ -38,32 +38,26 @@ def init_webapp(id):
     mu = np.log(Iqr_list[0][0])
     Iqr_list[0].pop(0) #drop mu
     
-    q5 = np.log(Iqr_list[0][0])
-    q95 = np.log(Iqr_list[0][1])
+#     q5 = np.log(Iqr_list[0][0])
+#     q95 = np.log(Iqr_list[0][1])
     
-    sigma = (q95 - q5)  / (1.645*2)
-    x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
+#     sigma = (q95 - q5)  / (1.645*2)
+#     x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
+#     kde = np.exp(x)
 
 #     Kde_list = norm.pdf(x, mu, sigma)
-#     print("mu=", mu)
-#     print("q5=", q5)
-#     print("q95=", q95)
-#     print("sigma=", sigma)
-#     print("LR=", mu - 3*sigma)
-#     print("UR=", mu + 3*sigma)
-#     print("x=", x)
     
-    return Iqr_list[0], np.exp(x)
+    return Iqr_list[0], np.exp(mu)
 
 
-# In[3]:
+# In[13]:
 
 
 def getRecord(id):
     init_webapp(id)
 
 
-# In[4]:
+# In[14]:
 
 
 def getRandomID():
@@ -72,7 +66,7 @@ def getRandomID():
     return [ int(rand['token_ids'].values[0]) ]
 
 
-# In[5]:
+# In[15]:
 
 
 if __name__ == "__main__":
